@@ -141,8 +141,19 @@ export class Film {
     const speed = Math.abs(this.velocity);
     const ahead = Math.min(this.cacheSize - 8, Math.ceil(speed * 0.25) + 6);
     this.want(i0);
+    // Quadro exato ainda não baixou (salto grande na primeira visita): decodifica o vizinho
+    // já baixado mais próximo, em vez de deixar na tela um quadro de outro trecho do filme.
+    if (this.fetchState[i0] !== 2) this.want(this.nearestLoaded(i0));
     for (let k = 1; k <= ahead; k++) this.want(i0 + this.direction * k);
     for (let k = 1; k <= 3; k++) this.want(i0 - this.direction * k);
+  }
+
+  nearestLoaded(i) {
+    for (let d = 1; d <= 64; d++) {
+      if (this.fetchState[i - d] === 2) return i - d;
+      if (this.fetchState[i + d] === 2) return i + d;
+    }
+    return -1;
   }
 
   want(i) {
