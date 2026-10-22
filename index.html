@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>DIVINE · Elixir Body Balm · Vonshér</title>
+    <meta name="description" content="DIVINE, o bálsamo corporal com fragrância concentrada da Vonshér." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Manrope:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Protótipo com textos provisórios: fora dos buscadores até a versão final. -->
+    <meta name="robots" content="noindex" />
+  </head>
+  <body>
+    <canvas id="film" aria-hidden="true"></canvas>
+    <div class="scrim" aria-hidden="true"></div>
+    <div class="progress" id="progress" aria-hidden="true"></div>
+
+    <div class="veil" id="veil" aria-hidden="true">
+      <b>DIVINE</b>
+      <span class="veil-track"><i id="veil-bar"></i></span>
+      <small>Vonshér</small>
+    </div>
+
+    <nav class="nav" aria-label="Principal">
+      <div class="pill">
+        <a class="brand" href="#topo">Vonshér</a>
+        <a class="link" href="#joia">A joia</a>
+        <a class="link" href="#fragrancia">Fragrância</a>
+        <a class="link" href="#textura">Textura</a>
+        <a class="link" href="#ritual">Ritual</a>
+        <a class="cta" href="#comprar">Comprar</a>
+      </div>
+    </nav>
+
+    <!--
+      Cada cena chega à imagem-chave data-key do filme quando o topo dela encosta no topo da
+      tela; a altura da cena é o quanto de scroll o trecho seguinte do filme consome.
+      O .stage gruda no topo, então o texto fica parado enquanto a cena dele roda.
+    -->
+    <main>
+      <header class="scene hero" id="topo" data-key="0">
+        <div class="stage">
+          <div class="col">
+            <p class="eyebrow reveal">Vonshér · Elixir Body Balm</p>
+            <h1 class="title reveal">DIVINE</h1>
+            <p class="lead reveal">
+              Um bálsamo corporal com fragrância concentrada. Hidrata, perfuma e fica na pele.
+            </p>
+            <div class="actions reveal">
+              <a class="btn" href="#comprar">Comprar agora</a>
+              <a class="ghost" href="#joia">Descobrir</a>
+            </div>
+          </div>
+          <p class="scroll-hint" aria-hidden="true">Role para abrir <i></i></p>
+        </div>
+      </header>
+
+      <section class="scene" id="joia" data-key="1">
+        <div class="stage">
+          <div class="col">
+            <p class="eyebrow reveal">A joia</p>
+            <h2 class="display reveal">Ouro que guarda um segredo.</h2>
+            <p class="body reveal">
+              Tampa em dourado espelhado sobre vidro espesso e transparente. O DIVINE foi feito para
+              ficar à vista na sua penteadeira.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="scene tall" id="fragrancia" data-key="2">
+        <div class="stage">
+          <div class="col">
+            <p class="eyebrow reveal">Fragrância concentrada</p>
+            <h2 class="display reveal">O perfume que fica.</h2>
+            <p class="body reveal">
+              Mais concentração de fragrância do que um hidratante comum. O aroma acompanha a pele
+              por horas, sem precisar reaplicar.
+            </p>
+            <ul class="notes reveal">
+              <li><span>Topo</span>a definir</li>
+              <li><span>Coração</span>a definir</li>
+              <li><span>Fundo</span>a definir</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="scene" id="textura" data-key="3">
+        <div class="stage">
+          <div class="col">
+            <p class="eyebrow reveal">A textura</p>
+            <h2 class="display reveal">Derrete ao toque.</h2>
+            <p class="body reveal">
+              Um bálsamo leve que se transforma em contato com a pele quente. Desliza, absorve
+              rápido e não deixa a pele pegajosa.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="scene" id="ritual" data-key="4">
+        <div class="stage">
+          <div class="col">
+            <p class="eyebrow reveal">O ritual</p>
+            <h2 class="display reveal">Três gestos, um perfume na pele.</h2>
+            <ol class="steps reveal">
+              <li><b>i</b>Aplique após o banho, com a pele ainda levemente úmida.</li>
+              <li><b>ii</b>Aqueça uma pequena porção entre as mãos.</li>
+              <li><b>iii</b>Espalhe em movimentos suaves nos braços, colo e pernas.</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <section class="scene buy" id="comprar" data-key="5">
+        <div class="stage">
+          <div class="col">
+            <div class="card reveal">
+              <p class="eyebrow">Vonshér</p>
+              <h2 class="display">DIVINE</h2>
+              <p class="card-sub">Elixir Body Balm · Fragrância concentrada</p>
+              <dl class="specs">
+                <div><dt>Conteúdo</dt><dd>— g</dd></div>
+                <div><dt>Notas</dt><dd>a definir</dd></div>
+              </dl>
+              <div class="price-row">
+                <strong class="price">R$ —</strong>
+                <a class="btn" href="#">Comprar</a>
+              </div>
+              <p class="fine">Frete e prazo calculados no checkout.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="foot">
+      <div class="foot-inner">
+        <b class="foot-brand">Vonshér</b>
+        <p>DIVINE Elixir Body Balm · Fragrância concentrada</p>
+        <p class="fine">© 2026 Vonshér. Todos os direitos reservados.</p>
+      </div>
+    </footer>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
