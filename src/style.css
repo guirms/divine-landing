@@ -1,11 +1,13 @@
 :root {
-  --bg: #0b0806;
-  --ink: #f4ecdd;
-  --muted: #b9ab93;
+  /* Marrom quente em vez de preto: o pedido foi "mais claro, sem exagerar". */
+  --bg: #1f160f;
+  --scrim: 31, 22, 15;
+  --ink: #f6efe2;
+  --muted: #c9b99d;
   --gold: #d9a84e;
   --gold-hi: #f3d48a;
-  --line: rgba(244, 236, 221, 0.14);
-  --glass: rgba(16, 11, 8, 0.55);
+  --line: rgba(246, 239, 226, 0.16);
+  --glass: rgba(38, 27, 18, 0.5);
   --serif: "Cinzel", "Times New Roman", serif;
   --sans: "Manrope", system-ui, sans-serif;
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
@@ -56,10 +58,10 @@ a {
   pointer-events: none;
   background: linear-gradient(
     90deg,
-    rgba(11, 8, 6, 0.92) 0%,
-    rgba(11, 8, 6, 0.74) 34%,
-    rgba(11, 8, 6, 0.26) 58%,
-    rgba(11, 8, 6, 0) 74%
+    rgba(var(--scrim), 0.8) 0%,
+    rgba(var(--scrim), 0.6) 34%,
+    rgba(var(--scrim), 0.18) 58%,
+    rgba(var(--scrim), 0) 74%
   );
 }
 
@@ -393,6 +395,13 @@ body.scrolled .scroll-hint {
   color: var(--muted);
 }
 
+.card-tagline {
+  margin-top: 0.9rem;
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  color: var(--gold-hi);
+}
+
 .specs {
   display: flex;
   gap: 2.4rem;
@@ -483,9 +492,9 @@ body.ready .hero .reveal {
   .scrim {
     background: linear-gradient(
       0deg,
-      rgba(11, 8, 6, 0.94) 0%,
-      rgba(11, 8, 6, 0.7) 34%,
-      rgba(11, 8, 6, 0) 62%
+      rgba(var(--scrim), 0.9) 0%,
+      rgba(var(--scrim), 0.64) 34%,
+      rgba(var(--scrim), 0) 62%
     );
   }
 

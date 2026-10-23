@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "frames": "python -I scripts/extract_frames.py"
+    "frames": "python -I scripts/extract_frames.py --gamma 0.78"
   },
   "devDependencies": {
     "vite": "^7.3.7"

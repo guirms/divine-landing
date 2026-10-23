@@ -1,16 +1,19 @@
 """Quebra os clipes do filme em quadros webp e gera o manifesto que o player lê.
 
 Uso (a partir da raiz do projeto):
-    python -I scripts/extract_frames.py [pasta_dos_clipes]
+    python -I scripts/extract_frames.py [pasta_dos_clipes] [--gamma 0.78]
 
 Os clipes c1.mp4 … cN.mp4 são cenas encadeadas: o último quadro de uma cena é o
 primeiro da seguinte (mesma imagem-chave), então o quadro 0 de cada cena a partir
 da segunda é descartado para não repetir. O índice de cada imagem-chave vira um
 "key" no manifesto, e é com eles que a página amarra cada seção a um trecho do filme.
+
+--gamma < 1 clareia sombras e meios-tons sem estourar os brilhos do dourado
+(0.78 = "mais claro sem exagerar", escolhido comparando quadros-chave).
 """
 
+import argparse
 import json
-import sys
 from pathlib import Path
 
 import av
@@ -23,10 +26,17 @@ QUALITY = 80
 
 
 def main() -> None:
-    clips_dir = Path(sys.argv[1]) if len(sys.argv) > 1 else DEFAULT_CLIPS
-    clips = sorted(clips_dir.glob("c[0-9]*.mp4"), key=lambda p: int(p.stem[1:]))
+    parser = argparse.ArgumentParser()
+    parser.add_argument("clips_dir", nargs="?", type=Path, default=DEFAULT_CLIPS)
+    parser.add_argument("--gamma", type=float, default=1.0)
+    args = parser.parse_args()
+
+    clips = sorted(args.clips_dir.glob("c[0-9]*.mp4"), key=lambda p: int(p.stem[1:]))
     if not clips:
-        sys.exit(f"nenhum clipe c*.mp4 em {clips_dir}")
+        parser.exit(1, f"nenhum clipe c*.mp4 em {args.clips_dir}\n")
+    curve = None
+    if args.gamma != 1.0:
+        curve = [round(255 * (i / 255) ** args.gamma) for i in range(256)] * 3
 
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     for old in OUT_DIR.glob("f_*.webp"):
@@ -41,6 +51,8 @@ def main() -> None:
                 if k == 0 and n > 0:
                     continue  # repete o último quadro da cena anterior
                 image = frame.to_image()
+                if curve:
+                    image = image.point(curve)
                 size = image.size
                 image.save(OUT_DIR / f"f_{index:04d}.webp", "WEBP", quality=QUALITY, method=4)
                 index += 1
