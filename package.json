@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "frames": "python -I scripts/extract_frames.py --gamma 0.78"
+    "frames": "python -I scripts/extract_frames.py ../scopes/divine-scroll-landing/clips-v2 --first-clip-start 132"
   },
   "devDependencies": {
     "vite": "^7.3.7"

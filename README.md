@@ -21,9 +21,11 @@ Opens on http://localhost:5173 (the harness preview config `divine-landing-dev` 
 npm run frames
 ```
 
-It reads `c1.mp4 … cN.mp4` from `../scopes/divine-scroll-landing/clips/` (or a folder passed as argument),
-drops the duplicated first frame of every clip after the first, and writes the keyframe indices (`keys`).
-Needs Python with PyAV and Pillow.
+It reads `c1.mp4 … cN.mp4` from the folder passed as argument (the npm script uses the v2 film in
+`../scopes/divine-scroll-landing/clips-v2/`), drops the duplicated first frame of every clip after the
+first, and writes the keyframe indices (`keys`). `--first-clip-start N` skips the first N frames of the
+first clip (v2 starts at 132: its opening had a glitch); `--gamma` lifts the shadows of a dark film (the v1
+film used 0.78). Needs Python with PyAV and Pillow.
 
 ## How the scroll maps to the film
 

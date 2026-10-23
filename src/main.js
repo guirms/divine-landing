@@ -13,8 +13,8 @@ let veilGone = false;
 
 const film = new Film(canvas, manifest, {
   // Centro do produto em cada imagem-chave (K1…K6), medido nos quadros. No K6 fica entre o
-  // pote (0,50) e a tampa (0,81).
-  focus: [0.7, 0.55, 0.51, 0.51, 0.5, 0.64],
+  // pote (0,52) e a tampa (0,83).
+  focus: [0.72, 0.71, 0.81, 0.65, 0.55, 0.64],
   onProgress: (loaded, total) => {
     if (!veilGone) veilBar.style.transform = `scaleX(${Math.min(1, loaded / Math.min(total, 90))})`;
   },

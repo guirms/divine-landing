@@ -10,6 +10,9 @@ da segunda é descartado para não repetir. O índice de cada imagem-chave vira 
 
 --gamma < 1 clareia sombras e meios-tons sem estourar os brilhos do dourado
 (0.78 = "mais claro sem exagerar", escolhido comparando quadros-chave).
+
+--first-clip-start N descarta os N primeiros quadros da primeira cena, para
+quando o começo dela saiu com defeito (o filme passa a abrir no quadro N).
 """
 
 import argparse
@@ -29,6 +32,7 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("clips_dir", nargs="?", type=Path, default=DEFAULT_CLIPS)
     parser.add_argument("--gamma", type=float, default=1.0)
+    parser.add_argument("--first-clip-start", type=int, default=0)
     args = parser.parse_args()
 
     clips = sorted(args.clips_dir.glob("c[0-9]*.mp4"), key=lambda p: int(p.stem[1:]))
@@ -50,6 +54,8 @@ def main() -> None:
             for k, frame in enumerate(container.decode(container.streams.video[0])):
                 if k == 0 and n > 0:
                     continue  # repete o último quadro da cena anterior
+                if n == 0 and k < args.first_clip_start:
+                    continue
                 image = frame.to_image()
                 if curve:
                     image = image.point(curve)

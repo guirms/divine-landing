@@ -1,13 +1,17 @@
 :root {
-  /* Marrom quente em vez de preto: o pedido foi "mais claro, sem exagerar". */
-  --bg: #1f160f;
-  --scrim: 31, 22, 15;
-  --ink: #f6efe2;
-  --muted: #c9b99d;
-  --gold: #d9a84e;
-  --gold-hi: #f3d48a;
-  --line: rgba(246, 239, 226, 0.16);
-  --glass: rgba(38, 27, 18, 0.5);
+  /* Tema claro (creme + marrom), no clima dourado do catálogo: o filme v2 é claro e o pedido
+     foi "mais claro, sem exagerar". --gold é o dourado de texto (fechado, legível no creme);
+     --gold-hi e --btn-* são os dourados claros de brilho e botão. */
+  --bg: #f5ede0;
+  --scrim: 247, 240, 229;
+  --ink: #2b1f14;
+  --muted: #6b5843;
+  --gold: #9a6b16;
+  --gold-hi: #c4943a;
+  --btn-a: #f3d48a;
+  --btn-b: #d9a84e;
+  --line: rgba(43, 31, 20, 0.14);
+  --glass: rgba(250, 245, 237, 0.62);
   --serif: "Cinzel", "Times New Roman", serif;
   --sans: "Manrope", system-ui, sans-serif;
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
@@ -50,7 +54,7 @@ a {
   pointer-events: none;
 }
 
-/* Faixa escura à esquerda: o texto fica legível mesmo quando o bálsamo claro ocupa a tela. */
+/* Faixa creme à esquerda: o texto escuro fica legível sobre os raios de luz do filme. */
 .scrim {
   position: fixed;
   inset: 0;
@@ -102,7 +106,7 @@ a {
   font-size: 2rem;
   letter-spacing: 0.4em;
   text-indent: 0.4em;
-  color: var(--gold-hi);
+  color: var(--gold);
 }
 
 .veil-track {
@@ -156,7 +160,7 @@ a {
   font-family: var(--serif);
   font-size: 1.05rem;
   letter-spacing: 0.08em;
-  color: var(--gold-hi);
+  color: var(--gold);
 }
 
 .pill a {
@@ -175,7 +179,7 @@ a {
 .pill .cta {
   padding: 0.55rem 1.1rem;
   border-radius: 100px;
-  background: linear-gradient(100deg, var(--gold-hi), var(--gold));
+  background: linear-gradient(100deg, var(--btn-a), var(--btn-b));
   color: #1a1209;
   font-weight: 600;
 }
@@ -231,7 +235,7 @@ main,
   line-height: 1;
   letter-spacing: 0.08em;
   margin-bottom: 1.4rem;
-  background: linear-gradient(180deg, var(--gold-hi), var(--gold) 70%);
+  background: linear-gradient(180deg, var(--gold-hi), var(--gold) 75%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -270,18 +274,18 @@ main,
   min-height: 52px;
   padding: 0 1.8rem;
   border-radius: 100px;
-  background: linear-gradient(100deg, var(--gold-hi), var(--gold) 60%, #b9812f);
+  background: linear-gradient(100deg, var(--btn-a), var(--btn-b) 60%, #b9812f);
   color: #1a1209;
   font-weight: 600;
   letter-spacing: 0.02em;
-  box-shadow: 0 12px 32px -14px rgba(217, 168, 78, 0.7);
+  box-shadow: 0 12px 32px -14px rgba(185, 129, 47, 0.55);
   transition:
     transform 0.2s,
     box-shadow 0.3s;
 }
 
 .btn:hover {
-  box-shadow: 0 16px 40px -12px rgba(217, 168, 78, 0.9);
+  box-shadow: 0 16px 40px -12px rgba(185, 129, 47, 0.75);
 }
 
 .btn:active {
@@ -380,7 +384,7 @@ body.scrolled .scroll-hint {
 
 .card {
   padding: 2.2rem;
-  border: 1px solid rgba(243, 212, 138, 0.28);
+  border: 1px solid rgba(154, 107, 22, 0.22);
   border-radius: 18px;
   background: var(--glass);
   backdrop-filter: blur(20px) saturate(1.2);
@@ -399,7 +403,7 @@ body.scrolled .scroll-hint {
   margin-top: 0.9rem;
   font-family: var(--serif);
   font-size: 1.05rem;
-  color: var(--gold-hi);
+  color: var(--gold);
 }
 
 .specs {
@@ -429,7 +433,7 @@ body.scrolled .scroll-hint {
   font-family: var(--serif);
   font-weight: 500;
   font-size: 2rem;
-  color: var(--gold-hi);
+  color: var(--gold);
 }
 
 .fine {
@@ -456,7 +460,7 @@ body.scrolled .scroll-hint {
   font-family: var(--serif);
   font-weight: 500;
   font-size: 1.3rem;
-  color: var(--gold-hi);
+  color: var(--gold);
   margin-bottom: 0.4rem;
 }
 
