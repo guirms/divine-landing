@@ -202,6 +202,11 @@ main,
   min-height: 220svh;
 }
 
+/* A primeira cena do filme v2 é curta (41 quadros): menos scroll para ela não parecer travada. */
+.scene.hero {
+  min-height: 130svh;
+}
+
 .scene.buy {
   min-height: 100svh;
 }
