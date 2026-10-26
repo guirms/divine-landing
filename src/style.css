@@ -211,6 +211,11 @@ main,
   min-height: 100svh;
 }
 
+/* Menos respiro no topo: o cartão de compra (preço + botão) precisa caber num notebook. */
+.scene.buy .stage {
+  padding-top: 5.5rem;
+}
+
 .stage {
   position: sticky;
   top: 0;
@@ -346,25 +351,6 @@ body.scrolled .scroll-hint {
   opacity: 0;
 }
 
-.notes {
-  list-style: none;
-  display: flex;
-  gap: 2rem;
-  margin-top: 1.8rem;
-  padding-top: 1.2rem;
-  border-top: 1px solid var(--line);
-  color: var(--muted);
-  font-size: 0.95rem;
-}
-
-.notes span {
-  display: block;
-  font-size: 0.7rem;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  color: var(--gold);
-}
-
 .steps {
   list-style: none;
   margin-top: 0.6rem;
@@ -388,7 +374,7 @@ body.scrolled .scroll-hint {
 /* ── compra ────────────────────────────────────────────────────────────── */
 
 .card {
-  padding: 2.2rem;
+  padding: 1.9rem 2rem;
   border: 1px solid rgba(154, 107, 22, 0.22);
   border-radius: 18px;
   background: var(--glass);
@@ -405,40 +391,85 @@ body.scrolled .scroll-hint {
 }
 
 .card-tagline {
-  margin-top: 0.9rem;
+  margin-top: 0.6rem;
   font-family: var(--serif);
   font-size: 1.05rem;
   color: var(--gold);
 }
 
-.specs {
-  display: flex;
-  gap: 2.4rem;
-  margin: 1.6rem 0;
-  padding: 1rem 0;
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-}
-
-.specs dt {
-  font-size: 0.7rem;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
+.launch {
+  display: inline-block;
+  margin-top: 1.3rem;
+  padding: 0.3rem 0.8rem;
+  border-radius: 100px;
+  background: rgba(154, 107, 22, 0.12);
   color: var(--gold);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
 }
 
-.price-row {
+.price-line {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1.4rem;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.9rem;
+  margin-top: 0.7rem;
+}
+
+.price-old {
+  color: var(--muted);
 }
 
 .price {
   font-family: var(--serif);
   font-weight: 500;
-  font-size: 2rem;
+  font-size: 2.2rem;
+  line-height: 1.1;
   color: var(--gold);
+}
+
+.buy-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.3rem;
+}
+
+.buy-row .btn {
+  flex: 1;
+}
+
+.qty {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--line);
+  border-radius: 100px;
+  background: rgba(255, 255, 255, 0.45);
+}
+
+.qty-btn {
+  width: 44px;
+  height: 50px;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  font: inherit;
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+
+.qty-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.qty-value {
+  min-width: 1.4rem;
+  text-align: center;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
 }
 
 .fine {
@@ -535,10 +566,6 @@ body.ready .hero .reveal {
 
   .scroll-hint {
     display: none;
-  }
-
-  .notes {
-    gap: 1.2rem;
   }
 
   .card {

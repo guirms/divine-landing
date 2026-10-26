@@ -3,6 +3,7 @@ import "lenis/dist/lenis.css";
 import "./style.css";
 import manifest from "./film-manifest.json";
 import { Film } from "./film.js";
+import { checkoutUrl, MAX_QUANTITY } from "./checkout.js";
 
 const canvas = document.getElementById("film");
 const veil = document.getElementById("veil");
@@ -92,6 +93,31 @@ function loop(now) {
 
 // Só em dev: permite inspecionar e avançar o loop à mão (aba em segundo plano congela o rAF).
 if (import.meta.env.DEV) window.__divine = { film, lenis, frameAt, onScroll, step };
+
+// Links de compra: os do topo levam 1 unidade; o do cartão segue o seletor de quantidade.
+// O href já vem pronto no HTML (1 unidade) para funcionar mesmo sem JS.
+const buyLink = document.getElementById("buy-link");
+const qtyOutput = document.getElementById("qty");
+let quantity = 1;
+
+function refreshCheckoutLinks() {
+  document.querySelectorAll("[data-checkout]").forEach((link) => {
+    link.href = checkoutUrl(link === buyLink ? quantity : 1);
+  });
+  qtyOutput.textContent = String(quantity);
+  document.querySelectorAll("[data-qty-step]").forEach((button) => {
+    const step = Number(button.dataset.qtyStep);
+    button.disabled = (step < 0 && quantity <= 1) || (step > 0 && quantity >= MAX_QUANTITY);
+  });
+}
+
+document.querySelectorAll("[data-qty-step]").forEach((button) => {
+  button.addEventListener("click", () => {
+    quantity = Math.min(MAX_QUANTITY, Math.max(1, quantity + Number(button.dataset.qtyStep)));
+    refreshCheckoutLinks();
+  });
+});
+refreshCheckoutLinks();
 
 const reveal = new IntersectionObserver(
   (entries) =>

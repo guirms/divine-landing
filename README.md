@@ -45,7 +45,16 @@ at https://guirms.github.io/divine-landing/. `base: "./"` in `vite.config.js` ke
 the same build works in a subfolder or at a domain root. The page carries `noindex` while the copy is
 provisional.
 
+## Checkout
+
+Buy buttons go to the Naxe checkout (`src/checkout.js`): `https://checkout.naxe.com.br/checkout?offers=BsUfPU-N`,
+where `N` is the quantity (the checkout reads `offers=CODE-QTY`, comma-separated for several offers). The hero
+button takes 1 unit; the buy card has a 1–5 quantity selector. Campaign params (`utm_*`, `gclid`, `fbclid`) and
+`affiliate` on the landing URL are forwarded, so the checkout records the sale's origin and credits affiliates.
+Prices on the page are static copy (launch R$ 199,00, regular R$ 249,00) — the checkout/API is the source of
+truth for what is charged; update the page when the offer price changes.
+
 ## Copy
 
-All text is placeholder (pt-BR) and lives in `index.html`. Price, net weight, fragrance notes and the
-buy link (`href="#"`) are still to be provided.
+All text is pt-BR and lives in `index.html` (catalog lines + launch price). Fragrance notes are still to be
+provided; their block was removed until then.

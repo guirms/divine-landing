@@ -8,6 +8,16 @@
       name="description"
       content="DIVINE Elixir Body Balm, da Vonshér: bálsamo corporal com fragrância concentrada. A essência do toque divino. 50 g."
     />
+    <!-- Prévia ao compartilhar o link (WhatsApp, Instagram, Facebook): a imagem precisa de URL absoluta. -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="DIVINE · Elixir Body Balm · Vonshér" />
+    <meta
+      property="og:description"
+      content="A essência do toque divino. Bálsamo corporal com fragrância concentrada, 50 g. Preço de lançamento: R$ 199,00."
+    />
+    <meta property="og:image" content="https://guirms.github.io/divine-landing/og-image.jpg" />
+    <meta property="og:url" content="https://guirms.github.io/divine-landing/" />
+    <meta name="twitter:card" content="summary_large_image" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -55,7 +65,9 @@
               hidrata, perfuma e fica na pele.
             </p>
             <div class="actions reveal">
-              <a class="btn" href="#comprar">Comprar agora</a>
+              <a class="btn" data-checkout href="https://checkout.naxe.com.br/checkout?offers=BsUfPU-1"
+                >Comprar · R$ 199,00</a
+              >
               <a class="ghost" href="#joia">Descobrir</a>
             </div>
           </div>
@@ -85,11 +97,6 @@
               Mais concentração de fragrância do que um hidratante comum. O aroma acompanha a pele
               por horas, sem precisar reaplicar.
             </p>
-            <ul class="notes reveal">
-              <li><span>Topo</span>a definir</li>
-              <li><span>Coração</span>a definir</li>
-              <li><span>Fundo</span>a definir</li>
-            </ul>
           </div>
         </div>
       </section>
@@ -127,17 +134,28 @@
             <div class="card reveal">
               <p class="eyebrow">Vonshér</p>
               <h2 class="display">DIVINE</h2>
-              <p class="card-sub">Elixir Body Balm · Fragrância concentrada</p>
+              <p class="card-sub">Elixir Body Balm · Fragrância concentrada · 50 g (1,76 fl oz)</p>
               <p class="card-tagline">Mais que hidratação. Uma experiência.</p>
-              <dl class="specs">
-                <div><dt>Conteúdo</dt><dd>50 g · 1,76 fl oz</dd></div>
-                <div><dt>Notas</dt><dd>a definir</dd></div>
-              </dl>
-              <div class="price-row">
-                <strong class="price">R$ —</strong>
-                <a class="btn" href="#">Comprar</a>
+              <p class="launch">Preço de lançamento</p>
+              <p class="price-line">
+                <span class="price-old">de <s>R$ 249,00</s></span>
+                <strong class="price">R$ 199,00</strong>
+              </p>
+              <div class="buy-row">
+                <div class="qty" role="group" aria-label="Quantidade">
+                  <button type="button" class="qty-btn" data-qty-step="-1" aria-label="Diminuir quantidade">
+                    −
+                  </button>
+                  <output class="qty-value" id="qty" aria-live="polite">1</output>
+                  <button type="button" class="qty-btn" data-qty-step="1" aria-label="Aumentar quantidade">
+                    +
+                  </button>
+                </div>
+                <a class="btn" id="buy-link" data-checkout href="https://checkout.naxe.com.br/checkout?offers=BsUfPU-1"
+                  >Comprar</a
+                >
               </div>
-              <p class="fine">Frete e prazo calculados no checkout.</p>
+              <p class="fine">Frete e prazo calculados no checkout. Pagamento seguro pela Naxe.</p>
             </div>
           </div>
         </div>
