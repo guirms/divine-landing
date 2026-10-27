@@ -7,8 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "frames": "python -I scripts/extract_frames.py ../scopes/divine-scroll-landing/clips-v2 --first-clip-start 150",
-    "frames:portrait": "python -I scripts/extract_frames.py ../scopes/divine-scroll-landing/clips-v2-vertical --out public/frames-portrait --manifest src/film-manifest-portrait.json --extra-key 24 --quality 75"
+    "frames": "python -I scripts/extract_frames.py ../scopes/divine-scroll-landing/clips-v2 --first-clip-start 150 --mp4 ../scopes/divine-scroll-landing/export/divine-film-16x9.mp4",
+    "frames:portrait": "python -I scripts/extract_frames.py ../scopes/divine-scroll-landing/clips-v2-vertical --out public/frames-portrait --manifest src/film-manifest-portrait.json --extra-key 24 --quality 75 --mp4 ../scopes/divine-scroll-landing/export/divine-film-9x16.mp4"
   },
   "devDependencies": {
     "vite": "^7.3.7"

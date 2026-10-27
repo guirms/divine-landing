@@ -22,10 +22,18 @@ npm run frames
 ```
 
 It reads `c1.mp4 … cN.mp4` from the folder passed as argument (the npm script uses the v2 film in
-`../scopes/divine-scroll-landing/clips-v2/`), drops the duplicated first frame of every clip after the
-first, and writes the keyframe indices (`keys`). `--first-clip-start N` skips the first N frames of the
-first clip (v2 starts at 150: its opening had a phantom-cap glitch); `--gamma` lifts the shadows of a dark film (the v1
-film used 0.78). Needs Python with PyAV and Pillow.
+`../scopes/divine-scroll-landing/clips-v2/`), stitches the clips and writes the index of every seam as a keyframe
+(`keys`). `--first-clip-start N` skips the first N frames of the first clip (v2 starts at 150: its opening had a
+phantom-cap glitch); `--gamma` lifts the shadows of a dark film (the v1 film used 0.78). `--mp4 path` also writes the
+same frames as a silent 24 fps H.264 video (the npm scripts put them in `../scopes/divine-scroll-landing/export/`).
+Needs Python with PyAV, Pillow, NumPy and imageio-ffmpeg.
+
+**Seams.** The clips were generated with a first and a last frame, but Veo only lands *near* the requested last
+frame (framing, zoom and light drift a little; in one clip the cap had already left the frame), and the next clip starts
+on the exact image and replays part of the motion — a straight cut jumped and went back in time by 6–8 frames. So for
+each seam the script searches the last/first `--junction` frames (48) for the most similar pair, drops what lies beyond
+it on both sides (5–8 tail frames in practice) and dissolves the `--dissolve` frames (8) around the cut. `--debug-dir`
+saves a strip of every seam to check by eye.
 
 Phones get a separate vertical film (720×1280, clips in `../scopes/divine-scroll-landing/clips-v2-vertical/`):
 
