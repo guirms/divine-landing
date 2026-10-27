@@ -1,7 +1,8 @@
 import Lenis from "lenis";
 import "lenis/dist/lenis.css";
 import "./style.css";
-import manifest from "./film-manifest.json";
+import landscapeManifest from "./film-manifest.json";
+import portraitManifest from "./film-manifest-portrait.json";
 import { Film } from "./film.js";
 import { checkoutUrl, MAX_QUANTITY } from "./checkout.js";
 
@@ -12,10 +13,21 @@ const progress = document.getElementById("progress");
 const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
 let veilGone = false;
 
+// Tela em pé (celular) usa o filme vertical; o resto, o horizontal — mesmo corte do layout de
+// celular no CSS. A escolha é feita ao abrir: trocar ao girar o aparelho baixaria o outro filme
+// inteiro de novo.
+const portrait = matchMedia("(max-aspect-ratio: 85/100)").matches;
+const manifest = portrait ? portraitManifest : landscapeManifest;
+
 const film = new Film(canvas, manifest, {
-  // Centro do produto em cada imagem-chave (K1…K6), medido nos quadros. No K6 fica entre o
-  // pote (0,52) e a tampa (0,83).
-  focus: [0.72, 0.71, 0.81, 0.65, 0.55, 0.64],
+  // Centro do produto em cada imagem-chave, medido nos quadros. No horizontal, o K6 fica entre
+  // o pote (0,52) e a tampa (0,83); no vertical o produto está no meio de todas.
+  focus: portrait ? [0.5, 0.5, 0.5, 0.5, 0.5, 0.5] : [0.72, 0.71, 0.81, 0.65, 0.55, 0.64],
+  // No vertical, o pote das três primeiras cenas fica atrás do título (texto embaixo, no
+  // celular): o quadro sobe 14% da tela nelas. Nos closes e no fim, o texto cobrir a base é ok.
+  lift: portrait ? [0.14, 0.14, 0.14, 0, 0, 0] : undefined,
+  // A cor do scrim, quase igual ao fundo da página e já no formato "r, g, b".
+  background: getComputedStyle(document.documentElement).getPropertyValue("--scrim").trim(),
   onProgress: (loaded, total) => {
     if (!veilGone) veilBar.style.transform = `scaleX(${Math.min(1, loaded / Math.min(total, 90))})`;
   },

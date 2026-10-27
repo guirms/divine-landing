@@ -27,6 +27,17 @@ first, and writes the keyframe indices (`keys`). `--first-clip-start N` skips th
 first clip (v2 starts at 150: its opening had a phantom-cap glitch); `--gamma` lifts the shadows of a dark film (the v1
 film used 0.78). Needs Python with PyAV and Pillow.
 
+Phones get a separate vertical film (720×1280, clips in `../scopes/divine-scroll-landing/clips-v2-vertical/`):
+
+```bash
+npm run frames:portrait
+```
+
+It writes `public/frames-portrait/` and `src/film-manifest-portrait.json` (`--out`, `--manifest`). That film has no
+K1 (its clips go K2 → K6), so `--extra-key 24` adds an anchor inside the first clip: the hero plays frames 0–24
+(closed jar) and "Detalhes premium" the cap lifting. It is encoded at `--quality 75` to weigh about the same as the
+horizontal film (~34 MB).
+
 ## How the scroll maps to the film
 
 - Every scene in `index.html` has `data-key="k"`: when its top reaches the top of the viewport, the film
@@ -36,6 +47,11 @@ film used 0.78). Needs Python with PyAV and Pillow.
 - `focus` in `src/main.js` is the product's horizontal centre in each keyframe; when the screen crops the
   sides of the frame, the player keeps the product in view (right of the text on desktop, centred on
   phones).
+- Screens taller than wide (`max-aspect-ratio: 85/100`, the same cut as the phone layout in the CSS) load the
+  vertical film; the rest load the horizontal one. The choice is made once, on load — switching on rotation would
+  download the other film too.
+- `lift` (vertical film only) moves the frame up by a fraction of the screen height in the first three keyframes, so
+  the jar sits above the text, which is at the bottom on phones; the band left below fades into the page colour.
 - `src/film.js` keeps all compressed frames in memory but only a small decoded window around the cursor.
 
 ## Deploy

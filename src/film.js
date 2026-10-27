@@ -11,7 +11,7 @@ const EASE_MS = 40; // inércia do cursor do filme, por tempo (não por quadro d
 const MAX_CANVAS_SIDE = 2560;
 
 export class Film {
-  constructor(canvas, manifest, { onProgress, focus } = {}) {
+  constructor(canvas, manifest, { onProgress, focus, lift, background } = {}) {
     this.canvas = canvas;
     this.ctx = canvas.getContext("2d", { alpha: false });
     this.manifest = manifest;
@@ -19,6 +19,11 @@ export class Film {
     this.onProgress = onProgress;
     // Centro horizontal do produto (0–1) em cada imagem-chave; entre elas, interpolado.
     this.focus = focus ?? manifest.keys.map(() => 0.5);
+    // Quanto o quadro sobe (fração da altura da tela) em cada imagem-chave: no celular, tira o
+    // produto de trás do texto, que fica embaixo. A faixa que sobra embaixo vira um degradê até
+    // background ("r, g, b", a cor de fundo da página).
+    this.lift = lift ?? manifest.keys.map(() => 0);
+    this.background = background;
 
     this.blobs = new Array(this.count).fill(null);
     this.fetchState = new Uint8Array(this.count); // 0 nada, 1 baixando, 2 ok, 3 falhou
@@ -222,27 +227,44 @@ export class Film {
     this.paint(bitmap, index);
   }
 
-  focusAt(i) {
+  // Valor de uma lista por imagem-chave (focus, lift) no quadro i, interpolado entre as chaves.
+  atKeys(values, i) {
     const keys = this.manifest.keys;
     for (let k = 0; k < keys.length - 1; k++) {
       if (i <= keys[k + 1]) {
         const t = (i - keys[k]) / Math.max(1, keys[k + 1] - keys[k]);
-        return this.focus[k] + (this.focus[k + 1] - this.focus[k]) * t;
+        return values[k] + (values[k + 1] - values[k]) * t;
       }
     }
-    return this.focus[this.focus.length - 1];
+    return values[values.length - 1];
   }
 
   // Cover com enquadramento que segue o produto: quando a tela corta as laterais do quadro,
   // o produto vai para productX da largura da tela (à direita do texto no desktop, no meio
-  // no celular), sem nunca deixar sobrar borda vazia.
+  // no celular), sem nunca deixar sobrar borda vazia nas laterais.
   paint(bitmap, index) {
     const { width: cw, height: ch } = this.canvas;
     const scale = Math.max(cw / bitmap.width, ch / bitmap.height);
     const w = Math.round(bitmap.width * scale);
     const h = Math.round(bitmap.height * scale);
-    const x = Math.min(0, Math.max(cw - w, this.productX * cw - this.focusAt(index) * w));
-    this.ctx.drawImage(bitmap, Math.round(x), Math.round((ch - h) / 2), w, h);
+    const x = Math.min(0, Math.max(cw - w, this.productX * cw - this.atKeys(this.focus, index) * w));
+    const y = Math.round((ch - h) / 2 - this.atKeys(this.lift, index) * ch);
+    this.ctx.drawImage(bitmap, Math.round(x), y, w, h);
+    if (y + h < ch) this.fadeBottom(y + h);
+  }
+
+  // Embaixo do quadro que subiu: degradê do fim do filme até a cor de fundo, e fundo liso no
+  // resto. O degradê encolhe junto com a faixa, para não sumir de uma vez quando o lift zera.
+  fadeBottom(edge) {
+    const { width: cw, height: ch } = this.canvas;
+    const fade = Math.min(ch * 0.12, (ch - edge) * 2);
+    const gradient = this.ctx.createLinearGradient(0, edge - fade, 0, edge);
+    gradient.addColorStop(0, `rgba(${this.background}, 0)`);
+    gradient.addColorStop(1, `rgb(${this.background})`);
+    this.ctx.fillStyle = gradient;
+    this.ctx.fillRect(0, edge - fade, cw, fade);
+    this.ctx.fillStyle = `rgb(${this.background})`;
+    this.ctx.fillRect(0, edge, cw, ch - edge);
   }
 
   // Tamanho pela caixa CSS do próprio canvas (não innerWidth), para o blit não reamostrar.
