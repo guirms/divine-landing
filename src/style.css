@@ -251,6 +251,28 @@ main,
   color: transparent;
 }
 
+/* Selo de pré-lançamento sob o título: traço curto + Cinzel espaçado, bem menor que o DIVINE. */
+.prelaunch {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin: -0.5rem 0 1.5rem;
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(1.15rem, 3vw, 2.6rem);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.prelaunch::before {
+  content: "";
+  flex: none;
+  width: 2.6rem;
+  height: 1px;
+  background: var(--gold);
+}
+
 .lead {
   font-size: 1.2rem;
   max-width: 26em;
@@ -525,6 +547,106 @@ body.ready .hero .reveal {
 .hero .reveal:nth-child(4) {
   transition-delay: 0.24s;
 }
+.hero .reveal:nth-child(5) {
+  transition-delay: 0.32s;
+}
+
+/* ── família olfativa ──────────────────────────────────────────────────── */
+
+/* Faixa opaca por cima do filme (que fica parado na imagem-chave 3 enquanto ela passa), no clima
+   da arte do catálogo: creme em cima e dourado quente embaixo, onde as ilustrações recortadas da
+   arte se fundem ao fundo. */
+.notes {
+  position: relative;
+  z-index: 3;
+  padding: clamp(4rem, 9vw, 7rem) clamp(1.5rem, 6vw, 6rem) clamp(2.5rem, 5vw, 4rem);
+  background: linear-gradient(180deg, var(--bg) 0%, #efdcc0 28%, #e4c39d 58%, #d4ad82 82%, #bb936e 100%);
+  color: var(--ink);
+}
+
+.notes-inner {
+  max-width: 74rem;
+  margin: 0 auto;
+}
+
+.notes-head {
+  display: inline-block;
+  margin-bottom: 2.8rem;
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid var(--gold-hi);
+}
+
+.notes-head .eyebrow {
+  margin-bottom: 0.4rem;
+}
+
+.notes-family {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(1.4rem, 2.6vw, 2.1rem);
+  line-height: 1.1;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.notes-grid {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0 2.5rem;
+}
+
+.note + .note {
+  padding-left: 2.5rem;
+  border-left: 1px solid rgba(154, 107, 22, 0.35);
+}
+
+.note-kind {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #3b2a16;
+}
+
+.note-list {
+  margin-top: 0.3rem;
+  font-family: var(--serif);
+  font-size: clamp(1.1rem, 1.6vw, 1.35rem);
+}
+
+.note img {
+  display: block;
+  width: 100%;
+  max-width: 24rem;
+  height: auto;
+  margin: 0.8rem auto 0;
+}
+
+.notes-claims {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.8rem 0;
+  margin-top: 2.4rem;
+  padding-top: 1.6rem;
+  border-top: 1px solid rgba(43, 31, 20, 0.2);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  text-align: center;
+  color: #3b2a16;
+}
+
+.notes-claims li {
+  padding: 0 1.6rem;
+}
+
+.notes-claims li + li {
+  border-left: 1px solid rgba(43, 31, 20, 0.35);
+}
 
 /* ── tela em pé (celular) ──────────────────────────────────────────────── */
 
@@ -570,6 +692,29 @@ body.ready .hero .reveal {
 
   .card {
     padding: 1.6rem;
+  }
+
+  .notes-grid {
+    grid-template-columns: 1fr;
+    gap: 1.6rem 0;
+  }
+
+  .note {
+    text-align: center;
+  }
+
+  .note + .note {
+    padding: 1.6rem 0 0;
+    border-left: 0;
+    border-top: 1px solid rgba(154, 107, 22, 0.35);
+  }
+
+  .note img {
+    max-width: 18rem;
+  }
+
+  .notes-claims li {
+    padding: 0 0.9rem;
   }
 }
 

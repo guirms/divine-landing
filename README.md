@@ -60,6 +60,9 @@ horizontal film (~34 MB).
   download the other film too.
 - `lift` (vertical film only) moves the frame up by a fraction of the screen height in the first three keyframes, so
   the jar sits above the text, which is at the bottom on phones; the band left below fades into the page colour.
+- The fragrance-notes band (`.notes`, after the "Fragrância" scene) has no film segment of its own: its
+  `data-key` repeats the next scene's key, so the film holds that keyframe under the opaque band and resumes
+  where it was. The band's three illustrations are cut-outs of the catalog art (`public/notes/`).
 - `src/film.js` keeps all compressed frames in memory but only a small decoded window around the cursor.
 - The canvas buffer and the scene anchors are measured again whenever the canvas box changes (a
   `ResizeObserver`), not only on `resize`: Safari runs `type="module"` scripts without waiting for the
@@ -72,7 +75,7 @@ GitHub Pages, via `.github/workflows/deploy.yml`: every push to `main` builds wi
 at **https://divine.vonsher.com.br/** (custom domain set in the repo's Pages settings; a `CNAME divine →
 guirms.github.io` record lives in the `vonsher.com.br` zone at Hostinger; https://guirms.github.io/divine-landing/
 redirects there). `base: "./"` in `vite.config.js` keeps every path relative, so the same build works in a subfolder
-or at a domain root. The page carries `noindex` while the copy is provisional.
+or at a domain root.
 
 ## Checkout
 
@@ -85,5 +88,6 @@ truth for what is charged; update the page when the offer price changes.
 
 ## Copy
 
-All text is pt-BR and lives in `index.html` (catalog lines + launch price). Fragrance notes are still to be
-provided; their block was removed until then.
+All text is pt-BR and lives in `index.html` (catalog lines + launch price). The hero carries a "Pré-lançamento"
+line under the title and the olfactory family (floral aromática: lavanda e gengibre · cacau e vanilla caviar ·
+baunilha) sits in its own band, both from the catalog art of 28/10/2026.
