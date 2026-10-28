@@ -669,6 +669,22 @@ body.ready .hero .reveal {
     padding: 6rem 0 3rem;
   }
 
+  /* Véu creme atrás do bloco de texto, que anda junto com ele: contraste garantido mesmo quando
+     o pote não cabe inteiro acima (tela visível curta, como o Safari com as barras). */
+  .col {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .col::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: -6rem -1.25rem -3rem;
+    background: linear-gradient(180deg, rgba(var(--scrim), 0) 0, rgba(var(--scrim), 0.92) 6rem, rgba(var(--scrim), 0.92) 100%);
+    pointer-events: none;
+  }
+
   .pill {
     gap: 1rem;
     padding-left: 1.1rem;

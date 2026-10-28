@@ -27,13 +27,36 @@ function scrimColor() {
 const portrait = matchMedia("(max-aspect-ratio: 85/100)").matches;
 const manifest = portrait ? portraitManifest : landscapeManifest;
 
+// No celular o texto fica no pé da tela e o pote precisa ficar acima dele. A subida mínima vale
+// para as três primeiras cenas; no hero ela cresce conforme a tela visível encolhe (Safari com
+// as barras), até a tampa encostar na barra de navegação. Pote medido em f_0000 do filme
+// vertical (fração da altura do quadro): topo da tampa e base do vidro.
+const BASE_LIFT = 0.14;
+const PORTRAIT_JAR = { top: 0.383, bottom: 0.727 };
+const LIFT_GAP = 12;
+
+function heroLift() {
+  const rect = canvas.getBoundingClientRect();
+  const scale = Math.max(rect.width / manifest.width, rect.height / manifest.height);
+  const drawn = manifest.height * scale;
+  const y0 = (rect.height - drawn) / 2;
+  const jarTop = y0 + PORTRAIT_JAR.top * drawn;
+  const jarBottom = y0 + PORTRAIT_JAR.bottom * drawn;
+  const navBottom = document.querySelector(".nav").getBoundingClientRect().bottom;
+  // offsetTop é relativo ao .stage (sticky), que gruda no topo da tela enquanto a cena roda.
+  const textTop = document.querySelector(".hero .col").offsetTop;
+  const max = Math.max(BASE_LIFT, (jarTop - navBottom - LIFT_GAP) / rect.height);
+  const need = (jarBottom - textTop + LIFT_GAP) / rect.height;
+  return Math.min(max, Math.max(BASE_LIFT, need));
+}
+
 const film = new Film(canvas, manifest, {
   // Centro do produto em cada imagem-chave, medido nos quadros. No horizontal, o K6 fica entre
   // o pote (0,52) e a tampa (0,83); no vertical o produto está no meio de todas.
   focus: portrait ? [0.5, 0.5, 0.5, 0.5, 0.5, 0.5] : [0.72, 0.71, 0.81, 0.65, 0.55, 0.64],
-  // No vertical, o pote das três primeiras cenas fica atrás do título (texto embaixo, no
-  // celular): o quadro sobe 14% da tela nelas. Nos closes e no fim, o texto cobrir a base é ok.
-  lift: portrait ? [0.14, 0.14, 0.14, 0, 0, 0] : undefined,
+  // No vertical, o quadro sobe nas três primeiras cenas (ver heroLift); nos closes e no fim, o
+  // texto cobrir a base é ok.
+  lift: portrait ? [BASE_LIFT, BASE_LIFT, BASE_LIFT, 0, 0, 0] : undefined,
   background: scrimColor(),
   onProgress: (loaded, total) => {
     if (!veilGone) veilBar.style.transform = `scaleX(${Math.min(1, loaded / Math.min(total, 90))})`;
@@ -156,6 +179,7 @@ document.querySelectorAll(".reveal").forEach((el) => reveal.observe(el));
 // ficava com a caixa padrão de 300×150 e o filme aparecia esticado na tela inteira.
 function relayout() {
   film.background = scrimColor();
+  if (portrait) film.lift = [heroLift(), BASE_LIFT, BASE_LIFT, 0, 0, 0];
   film.resize();
   measureAnchors();
   onScroll(scrollY);
