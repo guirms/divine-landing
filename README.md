@@ -86,6 +86,12 @@ button takes 1 unit; the buy card has a 1–5 quantity selector. Campaign params
 Prices on the page are static copy (launch R$ 199,00, regular R$ 249,00) — the checkout/API is the source of
 truth for what is charged; update the page when the offer price changes.
 
+## Icons
+
+`public/favicon.svg` is the tab icon (the gold cap with the brand's D); `favicon.ico` (32 + 16 px) and
+`apple-touch-icon.png` (180 px on the page's cream) are rasterised from it with a headless WebKit, so regenerate them
+when the SVG changes.
+
 ## Copy
 
 All text is pt-BR and lives in `index.html` (catalog lines + launch price). The hero carries a "Pré-lançamento"

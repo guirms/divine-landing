@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Tampa dourada do DIVINE com o D da marca -->
+  <defs>
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f3d48a"/>
+      <stop offset="0.55" stop-color="#c4943a"/>
+      <stop offset="1" stop-color="#9a6b16"/>
+    </linearGradient>
+  </defs>
+  <circle cx="32" cy="32" r="31" fill="url(#gold)"/>
+  <circle cx="32" cy="32" r="27.5" fill="none" stroke="#fff3cf" stroke-opacity="0.45" stroke-width="1.2"/>
+  <path fill="#2b1f14" fill-rule="evenodd" d="M19 15h15c10.5 0 15 7.5 15 17s-4.5 17-15 17H19Zm7 6v22h7c6.5 0 9.5-5 9.5-11s-3-11-9.5-11Z"/>
+</svg>
