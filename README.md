@@ -65,9 +65,10 @@ horizontal film (~34 MB).
 ## Deploy
 
 GitHub Pages, via `.github/workflows/deploy.yml`: every push to `main` builds with Vite and publishes `dist/`
-at https://guirms.github.io/divine-landing/. `base: "./"` in `vite.config.js` keeps every path relative, so
-the same build works in a subfolder or at a domain root. The page carries `noindex` while the copy is
-provisional.
+at **https://divine.vonsher.com.br/** (custom domain set in the repo's Pages settings; a `CNAME divine →
+guirms.github.io` record lives in the `vonsher.com.br` zone at Hostinger; https://guirms.github.io/divine-landing/
+redirects there). `base: "./"` in `vite.config.js` keeps every path relative, so the same build works in a subfolder
+or at a domain root. The page carries `noindex` while the copy is provisional.
 
 ## Checkout
 
