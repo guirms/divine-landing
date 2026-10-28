@@ -13,6 +13,14 @@ const progress = document.getElementById("progress");
 const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
 let veilGone = false;
 
+// A cor do scrim, quase igual ao fundo da página e já no formato "r, g, b". Lida de novo em
+// relayout(): o Safari roda o módulo sem esperar o CSS (WebKit 261655) e aí a variável ainda
+// não existe — sem o fallback a faixa embaixo do quadro sairia preta.
+const FALLBACK_SCRIM = "247, 240, 229";
+function scrimColor() {
+  return getComputedStyle(document.documentElement).getPropertyValue("--scrim").trim() || FALLBACK_SCRIM;
+}
+
 // Tela em pé (celular) usa o filme vertical; o resto, o horizontal — mesmo corte do layout de
 // celular no CSS. A escolha é feita ao abrir: trocar ao girar o aparelho baixaria o outro filme
 // inteiro de novo.
@@ -26,8 +34,7 @@ const film = new Film(canvas, manifest, {
   // No vertical, o pote das três primeiras cenas fica atrás do título (texto embaixo, no
   // celular): o quadro sobe 14% da tela nelas. Nos closes e no fim, o texto cobrir a base é ok.
   lift: portrait ? [0.14, 0.14, 0.14, 0, 0, 0] : undefined,
-  // A cor do scrim, quase igual ao fundo da página e já no formato "r, g, b".
-  background: getComputedStyle(document.documentElement).getPropertyValue("--scrim").trim(),
+  background: scrimColor(),
   onProgress: (loaded, total) => {
     if (!veilGone) veilBar.style.transform = `scaleX(${Math.min(1, loaded / Math.min(total, 90))})`;
   },
@@ -143,29 +150,20 @@ const reveal = new IntersectionObserver(
 );
 document.querySelectorAll(".reveal").forEach((el) => reveal.observe(el));
 
-let resizeTimer;
-window.addEventListener(
-  "resize",
-  () => {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(() => {
-      film.resize();
-      measureAnchors();
-      onScroll(scrollY);
-    }, 150);
-  },
-  { passive: true },
-);
+// Remede o canvas e as âncoras sempre que a caixa do canvas muda: ao girar o aparelho, ao
+// redimensionar a janela e — no Safari — quando o CSS chega depois do script (o WebKit não
+// espera a folha de estilo para rodar type="module", bug 261655). Sem isso, no iPhone o canvas
+// ficava com a caixa padrão de 300×150 e o filme aparecia esticado na tela inteira.
+function relayout() {
+  film.background = scrimColor();
+  film.resize();
+  measureAnchors();
+  onScroll(scrollY);
+}
+new ResizeObserver(relayout).observe(canvas);
 
-measureAnchors();
-document.fonts?.ready.then(() => {
-  measureAnchors();
-  onScroll(scrollY);
-});
-window.addEventListener("load", () => {
-  measureAnchors();
-  onScroll(scrollY);
-});
-onScroll(scrollY);
+document.fonts?.ready.then(relayout);
+window.addEventListener("load", relayout);
+relayout();
 film.cursor = film.target;
 requestAnimationFrame(loop);

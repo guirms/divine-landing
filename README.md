@@ -61,6 +61,10 @@ horizontal film (~34 MB).
 - `lift` (vertical film only) moves the frame up by a fraction of the screen height in the first three keyframes, so
   the jar sits above the text, which is at the bottom on phones; the band left below fades into the page colour.
 - `src/film.js` keeps all compressed frames in memory but only a small decoded window around the cursor.
+- The canvas buffer and the scene anchors are measured again whenever the canvas box changes (a
+  `ResizeObserver`), not only on `resize`: Safari runs `type="module"` scripts without waiting for the
+  stylesheet ([WebKit 261655](https://bugs.webkit.org/show_bug.cgi?id=261655)), so on an iPhone the first
+  measurement can see the default 300×150 canvas and the film came out stretched over the whole screen.
 
 ## Deploy
 
