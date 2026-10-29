@@ -83,7 +83,7 @@ Buy buttons go to the Naxe checkout (`src/checkout.js`): `https://checkout.naxe.
 where `N` is the quantity (the checkout reads `offers=CODE-QTY`, comma-separated for several offers). The hero
 button takes 1 unit; the buy card has a 1–5 quantity selector. Campaign params (`utm_*`, `gclid`, `fbclid`) and
 `affiliate` on the landing URL are forwarded, so the checkout records the sale's origin and credits affiliates.
-Prices on the page are static copy (launch R$ 199,00, regular R$ 249,00) — the checkout/API is the source of
+Prices on the page are static copy (launch R$ 199,90, regular R$ 249,00) — the checkout/API is the source of
 truth for what is charged; update the page when the offer price changes.
 
 ## Icons
